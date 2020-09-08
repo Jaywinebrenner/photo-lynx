@@ -6,7 +6,6 @@ import { db } from './firebase'
 
 function App() {
 
-  console.log("db", db);
   const [posts, setPosts] = useState([])
 
 
@@ -16,6 +15,8 @@ function App() {
     db.collection('posts').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => doc.data()))
     })
+
+    console.log("DB", db);
   }, []);
 
 
