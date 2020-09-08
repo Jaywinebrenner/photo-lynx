@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Logo from './media/logo.png'
+import Logo from './media/photolinx.png'
 import './App.css';
 import Post from './Post';
 import { db, auth } from './firebase';
@@ -126,6 +126,7 @@ function App() {
       {/* HEADER */}
       <div className="app__header">
         <img className="app__headerImage" src={Logo} />
+        <p className="app__subheader">An image sharing social media site</p>
       </div>
 
       <Button onClick={() => setOpen(true)}>Sign Up</Button>
