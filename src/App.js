@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Logo from './media/logo.png'
 import './App.css';
 import Post from './Post';
-import { db } from './firebase';
+import { db, auth } from './firebase';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 
 
-
+//Modal Stuff
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -37,14 +37,36 @@ function App() {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle)
 
-  const [posts, setPosts] = useState([])
-  const [open, setOpen] = useState(false)
+  const [posts, setPosts] = useState([]);
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
-  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
+
+  const [user, setUser] = useState(null)
 
 
   // useEffect runs a piece of code based on a specific condiction
+
+  useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged((authUser) => {
+        if (authUser) {
+          // user loggin in
+          console.log(authUser);
+          setUser(authUser);
+
+        } else {
+          // user has logged out
+          setUser(null);
+        }
+      })
+
+      return () => {
+        // perform clean up
+        unsubscribe();
+      }
+
+  }, [user, userName]);
 
   useEffect(() => {
 
@@ -58,7 +80,15 @@ function App() {
   }, []);
 
   const signUp = (e) => {
+    e.preventDefault();
 
+    auth.createUserWithEmailAndPassword(email, password)
+    .then((authUser) => {
+      return authUser.user.updateProfile({
+        displayName: userName
+      })
+    })
+    .catch((error) => alert(error.message))
   }
 
 
@@ -66,27 +96,30 @@ function App() {
     <div className="app">
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <center>
-            <img className="app__headerImage" src={Logo} />
+          <form className="app__signup">
+            <center>
+              <img className="app__headerImage" src={Logo} />
+            </center>
             <Input
-              placeholder="userName"
+              placeholder="User Name"
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
             <Input
-              placeholder="email"
+              placeholder="Email"
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              placeholder="password"
+              placeholder="Password"
               type="password"
               value={password}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
-          </center>
+            <Button type="submit" onClick={() => signUp()}>Sign Up</Button>
+          </form>
         </div>
       </Modal>
 
