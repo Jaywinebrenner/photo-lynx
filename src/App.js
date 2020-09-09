@@ -46,6 +46,14 @@ function App() {
   const [user, setUser] = useState(null)
 
 
+  console.log("posts", posts);
+  console.log("email", email);
+  console.log("password", password);
+  console.log("userName", userName);
+  console.log("user", user);
+  console.log("auth", auth);
+
+
   // useEffect runs a piece of code based on a specific condiction
 
   useEffect(() => {
@@ -79,8 +87,9 @@ function App() {
 
   }, []);
 
-  const signUp = (e) => {
-    e.preventDefault();
+
+  const signUp = (event) => {
+    event.preventDefault();
 
     auth.createUserWithEmailAndPassword(email, password)
     .then((authUser) => {
@@ -118,7 +127,7 @@ function App() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={() => signUp()}>Sign Up</Button>
+            <Button type="submit" onClick={signUp}>Sign Up</Button>
           </form>
         </div>
       </Modal>
