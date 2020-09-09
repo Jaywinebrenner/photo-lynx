@@ -1,9 +1,9 @@
 
 
-# imageLynx - 
+# photolynx - 
 
 
-  ![enter image description here](https://i.imgur.com/Gq70Yas.gif)
+  <!-- ![enter image description here](https://i.imgur.com/Gq70Yas.gif) -->
 
 ## By **Jay Winebrenner**
 
