@@ -6,6 +6,7 @@ import { db, auth } from './firebase';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
+import ImageUpload from './ImageUpload';
 
 
 //Modal Stuff
@@ -47,29 +48,29 @@ function App() {
   const [user, setUser] = useState(null)
 
 
-  console.log("posts", posts);
-  console.log("email", email);
-  console.log("password", password);
-  console.log("userName", userName);
+  // console.log("posts", posts);
+  // console.log("email", email);
+  // console.log("password", password);
+  // console.log("userName", userName);
+
+
   console.log("user", user);
 
-
-
+  
+  
   // useEffect runs a piece of code based on a specific condiction
-
+  
   useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged((authUser) => {
-        if (authUser) {
-          // user loggin in
-          console.log(authUser);
-          setUser(authUser);
-
-        } else {
-          // user has logged out
-          setUser(null);
-        }
-      })
-
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // user loggin in
+        console.log(authUser);
+        setUser(authUser);
+      } else {
+        // user has logged out
+        setUser(null);
+      }
+    })
       return () => {
         // perform clean up
         unsubscribe();
@@ -92,7 +93,8 @@ function App() {
   const signUp = (event) => {
     event.preventDefault();
 
-    auth.createUserWithEmailAndPassword(email, password)
+    auth
+    .createUserWithEmailAndPassword(email, password)
     .then((authUser) => {
       return authUser.user.updateProfile({
         displayName: userName
@@ -114,6 +116,11 @@ function App() {
 
   return (
     <div className="app">
+
+      {/* {user.displayName ? (<ImageUpload userName={user.displayName}/>) : <h3>Please Login to upload photos</h3>} */}
+      
+
+
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signup">
