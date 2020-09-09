@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Logo from './media/photolinx.png'
+import Logo from './media/photolynx-logo.png'
 import './App.css';
 import Post from './Post';
 import { db, auth } from './firebase';
@@ -39,6 +39,7 @@ function App() {
 
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
@@ -51,7 +52,7 @@ function App() {
   console.log("password", password);
   console.log("userName", userName);
   console.log("user", user);
-  console.log("auth", auth);
+
 
 
   // useEffect runs a piece of code based on a specific condiction
@@ -98,7 +99,17 @@ function App() {
       })
     })
     .catch((error) => alert(error.message))
+    setOpen(false)
   }
+
+    const signIn = (event) => {
+      event.preventDefault();
+
+      auth.signInWithEmailAndPassword(email, password)
+      .catch((error) => (alert(error.message)))
+
+      setOpenSignIn(false);
+    };
 
 
   return (
@@ -127,7 +138,35 @@ function App() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={signUp}>Sign Up</Button>
+            <Button type="submit" onClick={signUp}>
+              Sign Up
+            </Button>
+          </form>
+        </div>
+      </Modal>
+
+      {/* SIGN IN MODAL */}
+      <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app__signup">
+            <center>
+              <img className="app__headerImage" src={Logo} />
+            </center>
+            <Input
+              placeholder="Email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signIn}>
+              Sign In
+            </Button>
           </form>
         </div>
       </Modal>
@@ -137,8 +176,16 @@ function App() {
         <img className="app__headerImage" src={Logo} />
         <p className="app__subheader">An image sharing social media site</p>
       </div>
-
-      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      {user ? (
+        <Button type="submit" onClick={() => auth.signOut()}>
+          Log Out
+        </Button>
+      ) : (
+        <div className="app__loginContainer">
+          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+        </div>
+      )}
 
       {posts.map(({ id, post }) => (
         <Post
