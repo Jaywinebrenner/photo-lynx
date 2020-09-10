@@ -7,42 +7,18 @@ import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import ImageUpload from './ImageUpload';
-
-
-//Modal Stuff
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+import SignUpModal from './SignUpModal';
+import SignInModal from "./SignInModal";
+import { faCamera, faHome, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 
 function App() {
-  const classes = useStyles();
-  const [modalStyle] = useState(getModalStyle)
 
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [openSignIn, setOpenSignIn] = useState(false)
   const [userName, setUserName] = useState('');
 
   const [user, setUser] = useState(null);
@@ -72,7 +48,7 @@ function App() {
 
   useEffect(() => {
 
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -82,114 +58,38 @@ function App() {
   }, []);
 
 
-
-  const signUp = (event) => {
-    event.preventDefault();
-
-    auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((authUser) => {
-      return authUser.user.updateProfile({
-        displayName: userName
-      })
-    })
-    .catch((error) => alert(error.message))
-
-    setOpen(false)
-  }
-
-    const signIn = (event) => {
-      event.preventDefault();
-
-      auth.signInWithEmailAndPassword(email, password)
-      .catch((error) => (alert(error.message)))
-
-      setOpenSignIn(false);
-    };
-
-
-
-
-
   return (
     <div className="app">
+      {user?.displayName ? (
+        <ImageUpload userName={user.displayName} />
+      ) : (
+        <h3>Please Login to upload photos</h3>
+      )}
 
-      {user?.displayName ? (<ImageUpload userName={user.displayName}/>) : <h3>Please Login to upload photos</h3>}
-      
-
-
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app__signup">
-            <center>
-              <img className="app__headerImage" src={Logo} />
-            </center>
-            <Input
-              placeholder="User Name"
-              type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-            <Input
-              placeholder="Email"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              placeholder="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button type="submit" onClick={signUp}>
-              Sign Up
-            </Button>
-          </form>
-        </div>
-      </Modal>
-
-      {/* SIGN IN MODAL */}
-      <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app__signup">
-            <center>
-              <img className="app__headerImage" src={Logo} />
-            </center>
-            <Input
-              placeholder="Email"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              placeholder="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button type="submit" onClick={signIn}>
-              Sign In
-            </Button>
-          </form>
-        </div>
-      </Modal>
+      <SignUpModal open={open} setOpen={setOpen} />
+      <SignInModal openSignIn={openSignIn} setOpenSignIn={setOpenSignIn} />
 
       {/* HEADER */}
       <div className="app__header">
         <img className="app__headerImage" src={Logo} />
         <p className="app__subheader">An image sharing social media site</p>
+        {user ? (
+          <Button type="submit" onClick={() => auth.signOut()}>
+            Log Out
+          </Button>
+        ) : (
+          <div className="app__loginContainer">
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          </div>
+        )}
       </div>
-      {user ? (
-        <Button type="submit" onClick={() => auth.signOut()}>
-          Log Out
-        </Button>
-      ) : (
-        <div className="app__loginContainer">
-          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
-        </div>
-      )}
+      <div className="app__subheader">
+        <FontAwesomeIcon onClick={() => alert("hi")}style={{ color: "lightgray", marginRight: "30px" }} size="2x" icon={faCamera} />
+        <FontAwesomeIcon style={{ color: "lightgray", marginRight: "30px" }}  size="2x" icon={faHome} />
+        <FontAwesomeIcon style={{ color: "lightgray", marginRight: "30px" }}  size="2x" icon={faHeart} />
+        <FontAwesomeIcon style={{ color: "lightgray", marginRight: "30px" }}  size="2x" icon={faUser} />
+      </div>
 
       {posts.map(({ id, post }) => (
         <Post
