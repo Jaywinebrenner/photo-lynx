@@ -45,22 +45,14 @@ function App() {
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  const [displayName, setDisplayName] = useState('')
 
-
-  // console.log("posts", posts);
-  // console.log("email", email);
-  // console.log("password", password);
-  // console.log("userName", userName);
-
-
-  console.log("user", user);
-
-  
   
   // useEffect runs a piece of code based on a specific condiction
   
   useEffect(() => {
+    // Getting User
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user loggin in
@@ -90,6 +82,7 @@ function App() {
   }, []);
 
 
+
   const signUp = (event) => {
     event.preventDefault();
 
@@ -101,6 +94,7 @@ function App() {
       })
     })
     .catch((error) => alert(error.message))
+
     setOpen(false)
   }
 
@@ -114,10 +108,13 @@ function App() {
     };
 
 
+
+
+
   return (
     <div className="app">
 
-      {/* {user.displayName ? (<ImageUpload userName={user.displayName}/>) : <h3>Please Login to upload photos</h3>} */}
+      {user?.displayName ? (<ImageUpload userName={user.displayName}/>) : <h3>Please Login to upload photos</h3>}
       
 
 
