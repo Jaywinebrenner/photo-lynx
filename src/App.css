@@ -6,6 +6,8 @@
   background-color: #fafafa;
 }
 
+
+/* JUSTIFY CONTENT SPACE BETWEEN-- USE THIS!!! */
 .app__header {
   display: flex;
   align-items: center;
@@ -13,10 +15,12 @@
   padding: 20px;
   object-fit: contain;
   border-bottom: 1px solid lightgray;
+  justify-content: space-between;
 }
 
 .app__headerImage {
   height: 50px;
+  object-fit: contain;
 }
 
 .app__signup {
@@ -25,6 +29,36 @@
 }
 
 .app__subheader {
+  background-color: ##ECECEC;
   font-size: 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  justify-content: space-between;
+  padding: 10px 5rem;
 }
 
+.app__subheaderText {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5rem;
+}
+
+.app__loginContainer {
+  border: 1px solid lightgray;
+}
+
+.app__posts {
+  padding: 20px;
+}
+
+.app__icon {
+  color: lightgray;
+  margin-right: 30px;
+}
+
+.app__icon:hover {
+  color: maroon;
+}

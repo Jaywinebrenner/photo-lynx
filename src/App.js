@@ -19,6 +19,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false)
+  const [openImageUpload, setOpenImageUpload] = useState(false)
   const [userName, setUserName] = useState('');
 
   const [user, setUser] = useState(null);
@@ -61,9 +62,16 @@ function App() {
   return (
     <div className="app">
       {user?.displayName ? (
-        <ImageUpload userName={user.displayName} />
+        <ImageUpload
+          userName={user.displayName}
+          openImageUpload={openImageUpload}
+          setOpenImageUpload={setOpenImageUpload}
+        />
       ) : (
-        <h3>Please Login to upload photos</h3>
+        <div>
+          {console.log("Please Login to Upload photos")}
+          {/* {alert("Please Login to upload Photos")} */}
+        </div>
       )}
 
       <SignUpModal open={open} setOpen={setOpen} />
@@ -72,7 +80,7 @@ function App() {
       {/* HEADER */}
       <div className="app__header">
         <img className="app__headerImage" src={Logo} />
-        <p className="app__subheader">An image sharing social media site</p>
+        <p className="app__subheaderText">An image sharing social media site</p>
         {user ? (
           <Button type="submit" onClick={() => auth.signOut()}>
             Log Out
@@ -85,20 +93,39 @@ function App() {
         )}
       </div>
       <div className="app__subheader">
-        <FontAwesomeIcon onClick={() => alert("hi")}style={{ color: "lightgray", marginRight: "30px" }} size="2x" icon={faCamera} />
-        <FontAwesomeIcon style={{ color: "lightgray", marginRight: "30px" }}  size="2x" icon={faHome} />
-        <FontAwesomeIcon style={{ color: "lightgray", marginRight: "30px" }}  size="2x" icon={faHeart} />
-        <FontAwesomeIcon style={{ color: "lightgray", marginRight: "30px" }}  size="2x" icon={faUser} />
+        <FontAwesomeIcon
+          className="app__icon"
+          size="2x"
+          icon={faHome}
+        />
+        <FontAwesomeIcon
+          className="app__icon"
+          onClick={() => setOpenImageUpload(true)}
+          size="2x"
+          icon={faCamera}
+        />
+        <FontAwesomeIcon
+          className="app__icon"
+          size="2x"
+          icon={faHeart}
+        />
+        <FontAwesomeIcon
+          className="app__icon"
+          size="2x"
+          icon={faUser}
+        />
       </div>
 
-      {posts.map(({ id, post }) => (
-        <Post
-          key={id}
-          userName={post.userName}
-          imageUrl={post.imageUrl}
-          caption={post.caption}
-        />
-      ))}
+      <div className="app__posts">
+        {posts.map(({ id, post }) => (
+          <Post
+            key={id}
+            userName={post.userName}
+            imageUrl={post.imageUrl}
+            caption={post.caption}
+          />
+        ))}
+      </div>
     </div>
   );
 }
