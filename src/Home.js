@@ -1,6 +1,7 @@
 import { db, auth } from "./firebase";
 import React, { useState, useEffect } from "react";
 import Post from './Post';
+import "./Home.css";
 
 const Home = () => {
 
@@ -27,7 +28,7 @@ const Home = () => {
 
   console.log("home posts", posts);
   return (
-    <React.Fragment>
+    <div className="home__wrapper">
       {posts.map(({ id, post }) => (
         <Post
           key={id}
@@ -36,7 +37,7 @@ const Home = () => {
           caption={post.caption}
         />
       ))}
-    </React.Fragment>
+    </div>
   );
 }
 

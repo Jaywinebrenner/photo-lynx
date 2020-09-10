@@ -16,6 +16,7 @@
   object-fit: contain;
   border-bottom: 1px solid lightgray;
   justify-content: space-between;
+  background-color: #fafafa;
 }
 
 .app__headerImage {
@@ -29,7 +30,8 @@
 }
 
 .app__subheader {
-  background-color: ##ECECEC;
+  /* background-color: #ECECEC; */
+  background-color: white;
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -67,10 +69,12 @@
   margin-top: 12px;
   display: flex;
   flex-direction: column;
+ background-color: #fafafa;
 
 }
 
 .app__welcomeText {
+
   text-align: center;
   color: #9A1933;
 }
