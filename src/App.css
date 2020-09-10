@@ -62,3 +62,15 @@
 .app__icon:hover {
   color: maroon;
 }
+
+.app__welcomeTextWrapper {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.app__welcomeText {
+  text-align: center;
+  color: #9A1933;
+}

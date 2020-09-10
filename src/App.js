@@ -11,16 +11,18 @@ import SignUpModal from './SignUpModal';
 import SignInModal from "./SignInModal";
 import { faCamera, faHome, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import Home from './Home'
 
 
 function App() {
 
-  const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false)
   const [openImageUpload, setOpenImageUpload] = useState(false)
+
   const [userName, setUserName] = useState('');
+  const [posts, setPosts] = useState([]);
 
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState('')
@@ -47,18 +49,7 @@ function App() {
 
   }, [user, userName]);
 
-  useEffect(() => {
-
-    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setPosts(snapshot.docs.map(doc => ({
-        id: doc.id,
-        post: doc.data()
-      })))
-    })
-
-  }, []);
-
-
+  console.log("posts app", posts);
   return (
     <div className="app">
       {user?.displayName ? (
@@ -80,6 +71,7 @@ function App() {
       {/* HEADER */}
       <div className="app__header">
         <img className="app__headerImage" src={Logo} />
+
         <p className="app__subheaderText">An image sharing social media site</p>
         {user ? (
           <Button type="submit" onClick={() => auth.signOut()}>
@@ -93,38 +85,31 @@ function App() {
         )}
       </div>
       <div className="app__subheader">
-        <FontAwesomeIcon
-          className="app__icon"
-          size="2x"
-          icon={faHome}
-        />
+        <Link to="/Home">
+          <FontAwesomeIcon className="app__icon" size="2x" icon={faHome} />
+        </Link>
         <FontAwesomeIcon
           className="app__icon"
           onClick={() => setOpenImageUpload(true)}
           size="2x"
           icon={faCamera}
         />
-        <FontAwesomeIcon
-          className="app__icon"
-          size="2x"
-          icon={faHeart}
-        />
-        <FontAwesomeIcon
-          className="app__icon"
-          size="2x"
-          icon={faUser}
-        />
+
+        <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
+        <Link to="/Profile">
+          <FontAwesomeIcon className="app__icon" size="2x" icon={faUser} />
+        </Link>
+      </div>
+      <div className="app__welcomeTextWrapper">
+        {user?.displayName ? (
+          <h2 className="app__welcomeText">Welcome {user.displayName}</h2>
+        ) : (
+          <div></div>
+        )}
       </div>
 
       <div className="app__posts">
-        {posts.map(({ id, post }) => (
-          <Post
-            key={id}
-            userName={post.userName}
-            imageUrl={post.imageUrl}
-            caption={post.caption}
-          />
-        ))}
+        {/* <Home posts={posts} /> */}
       </div>
     </div>
   );

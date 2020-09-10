@@ -1,75 +1,127 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Logo from "./media/photolynx-logo.png";
+import "./App.css";
+import Post from "./Post";
+import { db, auth } from "./firebase";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
 import { Button, Input } from "@material-ui/core";
-import "./imageUpload.css";
-import { db, storage } from "./firebase";
-import firebase from "firebase";
+import ImageUpload from "./ImageUpload";
+import SignUpModal from "./SignUpModal";
+import SignInModal from "./SignInModal";
+import {
+  faCamera,
+  faHome,
+  faHeart,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 
-const ImageUpload = ({ userName }) => {
-  const [image, setImage] = useState("");
-  const [progress, setProgress] = useState("");
-  const [caption, setCaption] = useState("");
+function App() {
+  const [posts, setPosts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
+  const [openImageUpload, setOpenImageUpload] = useState(false);
+  const [userName, setUserName] = useState("");
 
-  const handleChange = (e) => {
-    if (e.target.value[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
+  const [user, setUser] = useState(null);
+  const [displayName, setDisplayName] = useState("");
 
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  // useEffect runs a piece of code based on a specific condiction
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progress function
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+  useEffect(() => {
+    // Getting User
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // user loggin in
+        console.log(authUser);
+        setUser(authUser);
+      } else {
+        // user has logged out
+        setUser(null);
+      }
+    });
+    return () => {
+      // perform clean up
+      unsubscribe();
+    };
+  }, [user, userName]);
+
+  useEffect(() => {
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          })),
         );
-        setProgress(progress);
-      },
-      (error) => {
-        // Error function
-        console.log(error);
-        alert(error.message);
-      },
-      () => {
-        //complete function
-        storage
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then((url) => {
-            // post image inside db
-            db.collection("posts").add({
-              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              caption: caption,
-              imageUrl: url,
-              userName: userName,
-            });
-
-            setProgress(0);
-            setCaption("");
-            setImage(null);
-          });
-      },
-    );
-  };
+      });
+  }, []);
 
   return (
-    <div className="imageUpload">
-      <progress className="imageUpload__progress" value={progress} max="100" />
-      <Input
-        type="text"
-        placeholder="Enter a caption"
-        onChange={(e) => setCaption(e.target.value)}
-        value={caption}
-      />
-      <Input type="file" onChange={handleChange} />
-      <Button onClick={handleUpload} className="imageUpload__button">
-        Upload
-      </Button>
+    <div className="app">
+      {user?.displayName ? (
+        <ImageUpload
+          userName={user.displayName}
+          openImageUpload={openImageUpload}
+          setOpenImageUpload={setOpenImageUpload}
+        />
+      ) : (
+        <div>
+          {console.log("Please Login to Upload photos")}
+          {/* {alert("Please Login to upload Photos")} */}
+        </div>
+      )}
+
+      <SignUpModal open={open} setOpen={setOpen} />
+      <SignInModal openSignIn={openSignIn} setOpenSignIn={setOpenSignIn} />
+
+      {/* HEADER */}
+      <div className="app__header">
+        <img className="app__headerImage" src={Logo} />
+        <p className="app__subheaderText">An image sharing social media site</p>
+        {user ? (
+          <Button type="submit" onClick={() => auth.signOut()}>
+            Log Out
+          </Button>
+        ) : (
+          <div className="app__loginContainer">
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          </div>
+        )}
+      </div>
+      <div className="app__subheader">
+        <FontAwesomeIcon className="app__icon" size="2x" icon={faHome} />
+
+        <FontAwesomeIcon
+          className="app__icon"
+          onClick={() => setOpenImageUpload(true)}
+          size="2x"
+          icon={faCamera}
+        />
+
+        <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
+        <Link to="/Profile">
+          <FontAwesomeIcon className="app__icon" size="2x" icon={faUser} />
+        </Link>
+      </div>
+
+      <div className="app__posts">
+        {posts.map(({ id, post }) => (
+          <Post
+            key={id}
+            userName={post.userName}
+            imageUrl={post.imageUrl}
+            caption={post.caption}
+          />
+        ))}
+      </div>
     </div>
   );
-};
+}
 
-export default ImageUpload;
+export default App;
