@@ -2,3 +2,14 @@
   height: 100%;
   background-color: #fafafa;
 }
+
+.profile__wrapper {
+    background-color: #fafafa;
+}
+
+.profile__images {
+    width: 10%;
+  object-fit: contain; 
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
