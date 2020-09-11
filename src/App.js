@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Logo from './media/photolynx-logo.png'
+import Logo from './media/photolynx-logo-with-tag.png'
 import './App.css';
-import Post from './Post';
-import { db, auth } from './firebase';
-import {makeStyles} from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { Button, Input } from '@material-ui/core';
+import { auth } from './firebase';
+import { Button } from '@material-ui/core';
 import ImageUpload from './ImageUpload';
 import SignUpModal from './SignUpModal';
 import SignInModal from "./SignInModal";
 import { faCamera, faHome, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Route, Link, BrowserRouter as Router } from "react-router-dom";
-import Home from './Home'
+import { Link, BrowserRouter as Router } from "react-router-dom";
+import { StickyContainer, Sticky } from "react-sticky";
 
 
 function App() {
@@ -26,6 +23,8 @@ function App() {
 
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState('')
+
+  console.log("user app", user);
 
   
   // useEffect runs a piece of code based on a specific condiction
@@ -60,7 +59,7 @@ function App() {
         />
       ) : (
         <div>
-          {console.log("Please Login to Upload photos")}
+       
           {/* {alert("Please Login to upload Photos")} */}
         </div>
       )}
@@ -72,7 +71,14 @@ function App() {
       <div className="app__header">
         <img className="app__headerImage" src={Logo} />
 
-        <p className="app__subheaderText">An image sharing social media site</p>
+        {/* <p className="app__subheaderText">An image sharing social media site</p> */}
+        <div className="app__welcomeTextWrapper">
+          {user?.displayName ? (
+            <h2 className="app__welcomeText">Welcome {user.displayName}</h2>
+          ) : (
+            <div></div>
+          )}
+        </div>
         {user ? (
           <Button type="submit" onClick={() => auth.signOut()}>
             Log Out
@@ -100,17 +106,8 @@ function App() {
           <FontAwesomeIcon className="app__icon" size="2x" icon={faUser} />
         </Link>
       </div>
-      <div className="app__welcomeTextWrapper">
-        {user?.displayName ? (
-          <h2 className="app__welcomeText">Welcome {user.displayName}</h2>
-        ) : (
-          <div></div>
-        )}
-      </div>
 
-      <div className="app__posts">
-        {/* <Home posts={posts} /> */}
-      </div>
+      <div className="app__posts">{/* <Home posts={posts} /> */}</div>
     </div>
   );
 }
