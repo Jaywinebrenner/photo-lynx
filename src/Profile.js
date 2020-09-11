@@ -44,27 +44,35 @@ const Profile = () => {
   }, []);
 
 {user && console.log("userName", user.displayName);}
+
+const ProfilePosts = 
+          posts.map(({ id, post }) => {
+            if (user.displayName === post.userName) {
+              return (
+                // <div>
+                //   <h2>{user.displayName}</h2>
+                //   <h2>{post.userName}</h2>
+                // </div>
+                <Post
+                  postId={id}
+                  key={id}
+                  user={user}
+                  userName={post.userName}
+                  imageUrl={post.imageUrl}
+                  caption={post.caption}
+                />
+              );
+              
+            }
+
+          })
  
   return (
     <div className="profile__wrapper">
       <div className="profile__wrapper">
-        {posts.map(({ id, post }) => (
 
- 
-            <div>
-              <h2>{user.displayName}</h2>
-              <h2>{post.userName}</h2>
-            </div>
+        {posts && ProfilePosts}
 
-          // <Post
-          //   postId={id}
-          //   key={id}
-          //   user={user}
-          //   userName={post.userName}
-          //   imageUrl={post.imageUrl}
-          //   caption={post.caption}
-          // />
-        ))}
       </div>
     </div>
   );
