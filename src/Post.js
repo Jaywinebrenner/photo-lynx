@@ -8,6 +8,31 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import firebase from "firebase";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Logo from "./media/photolynx-logo.png";
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 
 //userName = Person who wrote the post. 
@@ -16,6 +41,9 @@ import firebase from "firebase";
 const Post = ({postId, imageUrl, userName, caption, user}) => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const [openComment, setOpenComment] = useState(false)
 
     useEffect(() => {
       let unsubscribe;
@@ -46,6 +74,7 @@ const Post = ({postId, imageUrl, userName, caption, user}) => {
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         setComment('')
+        setOpenComment(false)
         }
 
   return (
@@ -56,48 +85,49 @@ const Post = ({postId, imageUrl, userName, caption, user}) => {
       </div>
       <img className="post__image" src={imageUrl} />
       <div className="app__subheader">
-  
-        <FontAwesomeIcon className="app__icon" size="2x" icon={faComment} />
+        <FontAwesomeIcon
+          onClick={() => setOpenComment(true)}
+          className="app__icon"
+          size="2x"
+          icon={faComment}
+        />
 
         <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
-    
-
       </div>
 
       <h4 className="post__text">
         <strong>{userName}:</strong> {caption}
       </h4>
       <div className="post__comments">
-
-          {
-            comments.map((comment) => (
-              <p>
-                <strong>{comment.userName}</strong> {comment.text}
-              </p>
-            ))
-          }
-
+        {comments.map((comment) => (
+          <p>
+            <strong>{comment.userName}</strong> {comment.text}
+          </p>
+        ))}
       </div>
 
-      {user && 
-      <form className="post__commentBox">
-        <input
-          className="post__input"
-          type="text"
-          placeholder="Add a comment..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <button 
-          className="post__button"
-          disabled={!comment}
-          type="submit"
-          onClick={postComment}
-          >
-          Post
-        </button>
-      </form>
-      }
+      <Modal open={openComment} onClose={() => setOpenComment(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <img className="app__headerImage" src={Logo} />
+          <form className="post__commentBox">
+            <input
+              className="post__input"
+              type="text"
+              placeholder="Add a comment..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button
+              className="post__button"
+              disabled={!comment}
+              type="submit"
+              onClick={postComment}
+            >
+              Post
+            </button>
+          </form>
+        </div>
+      </Modal>
 
     </div>
   );
