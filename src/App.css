@@ -24,7 +24,7 @@
 }
 
 .app__headerImage {
-  height: 70px;
+  height: 60px;
   object-fit: contain;
 }
 
@@ -71,6 +71,7 @@
 }
 
 .app__welcomeTextWrapper {
+    margin-right: 120px;
   margin-top: 12px;
   display: flex;
   flex-direction: column;

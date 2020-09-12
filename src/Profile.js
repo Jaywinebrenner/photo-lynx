@@ -12,6 +12,7 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [userName, setUserName] = useState("");
 
+
   useEffect(() => {
     // Getting User
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -47,12 +48,8 @@ const Profile = () => {
 
 const ProfilePosts = 
           posts.map(({ id, post }) => {
-            if (user.displayName === post.userName) {
+            if (user?.displayName === post.userName) {
               return (
-                // <div>
-                //   <h2>{user.displayName}</h2>
-                //   <h2>{post.userName}</h2>
-                // </div>
                 <Post
                   postId={id}
                   key={id}

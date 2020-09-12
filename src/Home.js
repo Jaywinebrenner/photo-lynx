@@ -4,59 +4,87 @@ import Post from './Post';
 import "./Home.css";
 
 const Home = () => {
+  const [user, setUser] = useState(null);
+  const [displayName, setDisplayName] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [allThumbnails, setAllThumbnails] = useState([]);
+  // const [thumbnail, setThumbnail] = useState(null);
+  const [userName, setUserName] = useState("");
 
-    const [user, setUser] = useState(null);
-    const [displayName, setDisplayName] = useState("");
-    const [posts, setPosts] = useState([]);
-    const [userName, setUserName] = useState("");
+  // useEffect runs a piece of code based on a specific condiction
 
-    // useEffect runs a piece of code based on a specific condiction
+  useEffect(() => {
+    // Getting User
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // user loggin in
+        console.log(authUser);
+        setUser(authUser);
+      } else {
+        // user has logged out
+        setUser(null);
+      }
+    });
+    return () => {
+      // perform clean up
+      unsubscribe();
+    };
+  }, [user, userName]);
 
-    useEffect(() => {
-      // Getting User
-      const unsubscribe = auth.onAuthStateChanged((authUser) => {
-        if (authUser) {
-          // user loggin in
-          console.log(authUser);
-          setUser(authUser);
-        } else {
-          // user has logged out
-          setUser(null);
-        }
+  useEffect(() => {
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          })),
+        );
       });
-      return () => {
-        // perform clean up
-        unsubscribe();
-      };
-    }, [user, userName]);
+  }, []);
 
-    useEffect(() => {
-      db.collection("posts")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) => {
-          setPosts(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              post: doc.data(),
-            })),
-          );
-        });
-    }, []);
+  const renderCorrectThumbnail = () => {
+    allThumbnails.map((thumbnail) => {
+      if (user?.displayName === thumbnail.userName) {
+        console.log("SAME");
+      }
+    });
+  };
+
+  // // Get Profile Photos
+  useEffect(() => {
+    db.collection("profiles").onSnapshot((snapshot) => {
+      setAllThumbnails(snapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
 
 
-  console.log("home posts", posts);
+let correctThumb = null;
+if (allThumbnails) {
+  correctThumb = allThumbnails.find((x) => x.userName === user?.displayName);
+}
+console.log("correct thumbnail", correctThumb);
+
+const renderPost = posts.map(({ id, post }) => (
+  <Post
+    postId={id}
+    key={id}
+    user={user}
+    userName={post.userName}
+    imageUrl={post.imageUrl}
+    caption={post.caption}
+    thumbnail={correctThumb}
+  />
+));
+
+  // let currentUserProps = list.find((x) => x.userID === userID);
+
+  console.log("home posts", allThumbnails);
+
   return (
     <div className="home__wrapper">
-      {posts.map(({ id, post }) => (
-        <Post
-          postId={id}
-          key={id}
-          user={user}
-          userName={post.userName}
-          imageUrl={post.imageUrl}
-          caption={post.caption}
-        />
-      ))}
+      {renderPost}
     </div>
   );
 }

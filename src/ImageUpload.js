@@ -11,8 +11,6 @@ const ImageUpload = ({userName, setOpenImageUpload, openImageUpload}) => {
 
 
   // MODAL STUFF
-
-
   function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -41,6 +39,7 @@ const [modalStyle] = useState(getModalStyle);
   const [image, setImage] = useState("");
   const [progress, setProgress] = useState('');
   const [caption, setCaption] = useState('');
+  const [thumbnail, setThumbnail] = useState('')
 
   const handleChange = (e) => {
     if (e.target.value[0]) {
@@ -77,7 +76,7 @@ const [modalStyle] = useState(getModalStyle);
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
               imageUrl: url,
-              userName: userName
+              userName: userName,
             });
 
             setProgress(0);

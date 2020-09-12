@@ -38,49 +38,57 @@ const useStyles = makeStyles((theme) => ({
 //userName = Person who wrote the post. 
 // user = Person who is signed in
 
-const Post = ({postId, imageUrl, userName, caption, user}) => {
-  const [comments, setComments] = useState([])
-  const [comment, setComment] = useState('')
+const Post = ({ postId, imageUrl, userName, caption, user, thumbnail }) => {
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
-  const [openComment, setOpenComment] = useState(false)
+  const [openComment, setOpenComment] = useState(false);
+  // const [allThumbnails, setAllThumbnails] = useState([]);
 
-    useEffect(() => {
-      let unsubscribe;
-      if (postId) {
-        unsubscribe = db
+  useEffect(() => {
+    let unsubscribe;
+    if (postId) {
+      unsubscribe = db
         .collection("posts")
         .doc(postId)
         .collection("comments")
-        .orderBy('timestamp', 'desc')
+        .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
           setComments(snapshot.docs.map((doc) => doc.data()));
-        })
-      }
+        });
+    }
+    return () => {
+      unsubscribe();
+    };
+  }, [postId]);
 
-      return () => {
-        unsubscribe();
-      };
+  const postComment = (event) => {
+    event.preventDefault();
 
-    }, [postId]);
+    db.collection("posts").doc(postId).collection("comments").add({
+      text: comment,
+      userName: user.displayName,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    setComment("");
+    setOpenComment(false);
+  };
+ 
 
 
-    const postComment = (event) => {
-        event.preventDefault();
+const renderPost = 
+  // return <Avatar className="post__avatar" src={thumbnail} />;
+thumbnail?.thumbnail
 
-        db.collection("posts").doc(postId).collection("comments").add({
-          text: comment,
-          userName: user.displayName,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        setComment('')
-        setOpenComment(false)
-        }
+  thumbnail && console.log("thumbnail on post", thumbnail.thumbnail);
 
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar className="post__avatar" src="media/dracula.png" />
+        <Avatar className="post__avatar" src={imageUrl} />
+        <Avatar className="post__avatar" src={renderPost} />
+ 
         <h3>{userName}</h3>
       </div>
       <img className="post__image" src={imageUrl} />
@@ -128,9 +136,8 @@ const Post = ({postId, imageUrl, userName, caption, user}) => {
           </form>
         </div>
       </Modal>
-
     </div>
   );
-}
+};
 
 export default Post
