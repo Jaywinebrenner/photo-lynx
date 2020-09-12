@@ -18,7 +18,7 @@ const Home = () => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user loggin in
-        console.log(authUser);
+        // console.log(authUser);
         setUser(authUser);
       } else {
         // user has logged out
@@ -44,27 +44,23 @@ const Home = () => {
       });
   }, []);
 
-  const renderCorrectThumbnail = () => {
-    allThumbnails.map((thumbnail) => {
-      if (user?.displayName === thumbnail.userName) {
-        console.log("SAME");
-      }
-    });
-  };
 
   // // Get Profile Photos
-  useEffect(() => {
-    db.collection("profiles").onSnapshot((snapshot) => {
-      setAllThumbnails(snapshot.docs.map((doc) => doc.data()));
-    });
-  }, []);
+  // useEffect(() => {
+  //   db.collection("profiles").onSnapshot((snapshot) => {
+  //     setAllThumbnails(snapshot.docs.map((doc) => doc.data()));
+  //   });
+  // }, []);
 
 
 let correctThumb = null;
 if (allThumbnails) {
   correctThumb = allThumbnails.find((x) => x.userName === user?.displayName);
 }
-console.log("correct thumbnail", correctThumb);
+// console.log("correct thumbnail", correctThumb);
+
+console.log("user", user)
+posts && console.log("posts", posts[0]);
 
 const renderPost = posts.map(({ id, post }) => (
   <Post
@@ -78,9 +74,8 @@ const renderPost = posts.map(({ id, post }) => (
   />
 ));
 
-  // let currentUserProps = list.find((x) => x.userID === userID);
 
-  console.log("home posts", allThumbnails);
+  // console.log("home posts", allThumbnails);
 
   return (
     <div className="home__wrapper">

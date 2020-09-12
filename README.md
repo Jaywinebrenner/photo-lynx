@@ -1,4 +1,7 @@
 
+//userName = Person who wrote the post. 
+// user = Person who is signed in
+
 
 # photolynx - 
 

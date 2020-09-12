@@ -52,9 +52,7 @@ function App() {
   };
 
 
-
-
-  console.log("user app", user);
+  // console.log("user app", user);
 
   
   // useEffect runs a piece of code based on a specific condiction
@@ -64,7 +62,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user loggin in
-        console.log(authUser);
+        // console.log(authUser);
         setUser(authUser);
       } else {
         // user has logged out

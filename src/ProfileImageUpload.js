@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { db, auth, storage } from "./firebase";
 import { Button, Input } from "@material-ui/core";
 import "./imageUpload.css";
-import { db, storage } from "./firebase";
 import firebase from "firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -12,6 +12,28 @@ const ProfileImageUpload = ({
   setOpenProfileImageUpload,
   openProfileImageUpload,
 }) => {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Getting User
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // user loggin in
+        // console.log(authUser);
+        setUser(authUser);
+      } else {
+        // user has logged out
+        setUser(null);
+      }
+    });
+    return () => {
+      // perform clean up
+      unsubscribe();
+    };
+  }, [user, userName]);
+
+
   // MODAL STUFF
 
   function getModalStyle() {
@@ -74,10 +96,17 @@ const ProfileImageUpload = ({
           .getDownloadURL()
           .then((url) => {
             // post image inside db
-            db.collection("profiles").add({
-              thumbnail: url,
-              userName: userName,
-            });
+
+              //  db.collection("posts").doc(postId).collection("thumbnail").add({
+              //    thumbnail: url,
+              //  });
+
+          
+              db.collection("posts").add({
+                thumbnail: url,
+                userName: userName,
+              });
+    
 
             setProgress(0);
             setProfileImage(null);
@@ -86,6 +115,23 @@ const ProfileImageUpload = ({
       },
     );
   };
+
+  // maybe?
+  // const postComment = (event) => {
+  //   event.preventDefault();
+
+  //   db.collection("posts").doc(postId).collection("comments").add({
+  //     text: comment,
+  //     userName: user.displayName,
+  //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  //   });
+  //   setComment("");
+  //   setOpenComment(false);
+  // };
+
+
+
+
 
   return (
     <Modal

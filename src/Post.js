@@ -46,7 +46,10 @@ const Post = ({ postId, imageUrl, userName, caption, user, thumbnail }) => {
   const [openComment, setOpenComment] = useState(false);
   // const [allThumbnails, setAllThumbnails] = useState([]);
 
+  console.log('post id on post', postId);
+
   useEffect(() => {
+    //Comments
     let unsubscribe;
     if (postId) {
       unsubscribe = db
@@ -75,7 +78,7 @@ const Post = ({ postId, imageUrl, userName, caption, user, thumbnail }) => {
     setOpenComment(false);
   };
  
-
+  
 
 const renderPost = 
   // return <Avatar className="post__avatar" src={thumbnail} />;
