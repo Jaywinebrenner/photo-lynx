@@ -1,0 +1,56 @@
+.profilePost {
+
+  max-width: 600px;
+  background-color: white;
+  border: 1px solid lightgray;
+  margin: auto;
+  margin-bottom: 45px;
+}
+
+.profilePost__image {
+  width: 100%;
+  object-fit: contain; 
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+
+.profilePost__text {
+  font-weight: normal;
+  padding: 20px;
+}
+
+.profilePost__header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.profilePost__avatar {
+  margin-right: 10px;
+}
+
+.profilePost__commentBox {
+  display: flex;
+  margin-top: 10px;
+}
+
+.profilePost__input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+  
+}
+
+.profilePost__button {
+  flex: 0;
+  border: none;
+  border: 1px solid lightgray;
+
+}
+
+.profilePost__comments {
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
