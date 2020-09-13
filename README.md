@@ -3,7 +3,7 @@
 # photolynx - 
 
 
-  <!-- ![enter image description here](https://i.imgur.com/Gq70Yas.gif) -->
+<img src="./x-gifs/photolynx.gif" width="750">
 
 ## By **Jay Winebrenner**
 
@@ -25,10 +25,6 @@
 5. For purposes of these instructions, anything inside of // is what is to be typed in the terminal. If the instruction says // hello // for example, you'd type just the word hello in the terminal.
 
 
-
-
-  ### ReactJS Component Schema:
-  ![enter image description here](https://i.imgur.com/Ng0pIKI.png)
 
   ### Technologies Used
 
