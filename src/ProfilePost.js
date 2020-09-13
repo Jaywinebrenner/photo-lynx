@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Post.css";
+import "./profilePost.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "./firebase";
 import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import firebase from "firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Logo from "./media/photolynx-logo.png";
+import { Container, Row, Col } from "reactstrap";
 
 function getModalStyle() {
   const top = 50;
@@ -83,8 +84,9 @@ const ProfilePost = ({ postId, imageUrl, userName, caption, user, thumbnail }) =
   return (
     <div className="profilePost">
       <div className="profilePost__header">
-        <Avatar className="profilePost__avatar" src={imageUrl} />
-        <Avatar className="profilePost__avatar" src={renderPost} />
+        <Avatar className="profilePost__avatar"  /> 
+        {/* <Avatar className="profilePost__avatar" src={imageUrl} /> */}
+        {/* <Avatar className="profilePost__avatar" src={renderPost} /> */}
 
         <h3>{userName}</h3>
       </div>
@@ -137,4 +139,4 @@ const ProfilePost = ({ postId, imageUrl, userName, caption, user, thumbnail }) =
   );
 };
 
-export default Profile;
+export default ProfilePost;

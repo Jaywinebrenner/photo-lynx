@@ -5,7 +5,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Profile from './Profile'
-import Home from './Home'
+import Home from './Home';
+import "bootstrap/dist/css/bootstrap.css";
 
 
 ReactDOM.render(

@@ -1,15 +1,18 @@
+/* .profile__wrapper {
+  display: flex;
+  direction: row;
+  height: 100%;
+  background-color: #fafafa;
+} */
+
 .profile__wrapper {
+  display: flex;
+  flex-direction: row;
   height: 100%;
   background-color: #fafafa;
 }
 
-.profile__wrapper {
-    background-color: #fafafa;
+.grid {
+  margin: 0 auto;
 }
 
-.profile__images {
-    width: 10%;
-  object-fit: contain; 
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
-}

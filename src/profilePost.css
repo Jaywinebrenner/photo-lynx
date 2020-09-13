@@ -1,10 +1,15 @@
 .profilePost {
-
-  max-width: 600px;
+  /* flex: 1; */
+  max-width: 270px;
   background-color: white;
   border: 1px solid lightgray;
   margin: auto;
   margin-bottom: 45px;
+
+}
+
+.gridItem {
+
 }
 
 .profilePost__image {
@@ -22,7 +27,7 @@
 .profilePost__header {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 5px;
 }
 
 .profilePost__avatar {
@@ -31,13 +36,13 @@
 
 .profilePost__commentBox {
   display: flex;
-  margin-top: 10px;
+
 }
 
 .profilePost__input {
   flex: 1;
   border: none;
-  padding: 10px;
+  /* padding: 10px; */
   border-top: 1px solid lightgray;
   
 }
@@ -51,6 +56,6 @@
 
 .profilePost__comments {
   padding-left: 20px;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 

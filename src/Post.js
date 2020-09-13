@@ -89,9 +89,10 @@ thumbnail?.thumbnail
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar className="post__avatar" src={imageUrl} />
-        <Avatar className="post__avatar" src={renderPost} />
- 
+        <Avatar className="post__avatar"  />
+        {/* <Avatar className="post__avatar" src={imageUrl} /> */}
+        {/* <Avatar className="post__avatar" src={renderPost} /> */}
+
         <h3>{userName}</h3>
       </div>
       <img className="post__image" src={imageUrl} />

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./profile.css";
 import { db, auth } from "./firebase";
-import Post from './Post'
+import ProfilePost from './ProfilePost'
+import { Container, Row, Col } from "reactstrap";
+import InfiniteScroll from "react-infinite-scroller";
+import Masonry from "react-masonry-component";
+import { masonryOptions } from "./exports";
 
 const Profile = () => {
 
@@ -50,7 +54,7 @@ const ProfilePosts =
           posts.map(({ id, post }) => {
             if (user?.displayName === post.userName) {
               return (
-                <Post
+                <ProfilePost
                   postId={id}
                   key={id}
                   user={user}
@@ -65,12 +69,19 @@ const ProfilePosts =
           })
  
   return (
-    <div className="profile__wrapper">
-      <div className="profile__wrapper">
+    // <div className="profile__wrapper">{posts && ProfilePosts}</div>
+    <div>
 
-        {posts && ProfilePosts}
+        <Masonry
+          className={"grid"}
+          elementType={"div"}
+          options={masonryOptions}
+          disableImagesLoaded={false}
+          updateOnEachImageLoad={false}
+        >
+          {posts && ProfilePosts}
+        </Masonry>
 
-      </div>
     </div>
   );
 }
