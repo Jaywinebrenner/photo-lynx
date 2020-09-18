@@ -77,6 +77,14 @@ const Post = ({ postId, imageUrl, userName, caption, user, thumbnail }) => {
     setComment("");
     setOpenComment(false);
   };
+
+  const [localLikes, setLocalLikes] = useState(3)
+
+
+  const addLike = () => {
+    // if (localLikes === )
+    setLocalLikes(localLikes + 1)
+  }
  
   
 
@@ -89,7 +97,7 @@ thumbnail?.thumbnail
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar className="post__avatar"  />
+        <Avatar className="post__avatar" />
         {/* <Avatar className="post__avatar" src={imageUrl} /> */}
         {/* <Avatar className="post__avatar" src={renderPost} /> */}
 
@@ -104,8 +112,17 @@ thumbnail?.thumbnail
           icon={faComment}
         />
 
-        <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
+        <FontAwesomeIcon
+          onClick={()=> addLike()}
+          className="app__icon"
+          size="2x"
+          icon={faHeart}
+        />
       </div>
+      <h6 className="post__likesText">
+        <strong>Likes: </strong>
+        {localLikes}
+      </h6>
 
       <h4 className="post__text">
         <strong>{userName}:</strong> {caption}

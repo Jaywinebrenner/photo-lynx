@@ -84,7 +84,7 @@ const ProfilePost = ({ postId, imageUrl, userName, caption, user, thumbnail }) =
   return (
     <div className="profilePost">
       <div className="profilePost__header">
-        <Avatar className="profilePost__avatar"  /> 
+        <Avatar className="profilePost__avatar" />
         {/* <Avatar className="profilePost__avatar" src={imageUrl} /> */}
         {/* <Avatar className="profilePost__avatar" src={renderPost} /> */}
 
@@ -101,6 +101,7 @@ const ProfilePost = ({ postId, imageUrl, userName, caption, user, thumbnail }) =
 
         <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
       </div>
+
 
       <h4 className="profilePost__text">
         <strong>{userName}:</strong> {caption}

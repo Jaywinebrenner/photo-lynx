@@ -16,7 +16,7 @@
 
 .post__text {
   font-weight: normal;
-  padding: 20px;
+  padding: 0px 20px;
 }
 
 .post__header {
@@ -52,5 +52,17 @@
 .post__comments {
   padding-left: 20px;
   padding-bottom: 10px;
+}
+
+.heartCount {
+  position: inline;
+ /* position: absolute; */
+ /* right: 295px; */
+
+}
+
+.post__likesText {
+  font-weight: normal;
+  padding: 10px 20px 0px 20px;
 }
 
