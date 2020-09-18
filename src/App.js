@@ -16,6 +16,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router";
+
 
 
 //Dropdown
@@ -32,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 function App() {
+
+   const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false)
@@ -77,10 +82,22 @@ function App() {
 
   }, [user, userName]);
 
+  const signOutClick = () => {
+    auth.signOut();
+    history.push(`/Home`);
 
+  }
 
+  const cameraUploadIconClick = () => {
+    if(user) {
+        setOpenImageUpload(true);
+    } else {
+      alert("Please sign up or sign in to post a picture.")
+    }
+  }
 
-  console.log("posts app", posts);
+ console.log("user", user);
+
   return (
     <div className="app">
       {user?.displayName ? (
@@ -131,7 +148,7 @@ function App() {
                 onChange={handleChange}
                 label="Options"
               >
-                <MenuItem onClick={() => auth.signOut()}>Log Out</MenuItem>
+                <MenuItem onClick={() => signOutClick()}>Log Out</MenuItem>
                 <MenuItem onClick={() => setOpenProfileImageUpload(true)}>
                   Add Profile Picture
                 </MenuItem>
@@ -155,7 +172,7 @@ function App() {
         </Link>
         <FontAwesomeIcon
           className="app__icon"
-          onClick={() => setOpenImageUpload(true)}
+          onClick={() => cameraUploadIconClick()}
           size="2x"
           icon={faCamera}
         />

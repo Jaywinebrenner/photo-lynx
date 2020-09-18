@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import Masonry from "react-masonry-component";
 import { masonryOptions } from "./exports";
 
+import {Travolta} from './media/travolta.gif'
 const Profile = () => {
 
  
@@ -51,37 +52,45 @@ const Profile = () => {
 {user && console.log("userName", user.displayName);}
 
 const ProfilePosts = 
-          posts.map(({ id, post }) => {
-            if (user?.displayName === post.userName) {
-              return (
-                <ProfilePost
-                  postId={id}
-                  key={id}
-                  user={user}
-                  userName={post.userName}
-                  imageUrl={post.imageUrl}
-                  caption={post.caption}
-                />
-              );
-              
-            }
+    posts.map(({ id, post }) => {
+      if (user?.displayName === post.userName) {
+        return (
+          <ProfilePost
+            postId={id}
+            key={id}
+            user={user}
+            userName={post.userName}
+            imageUrl={post.imageUrl}
+            caption={post.caption}
+          />
+        );
+      }
 
-          })
+    })
+
+    const RenderPostDoesNotExit = (
+      <div className="profile__postDoesNotExistWrapper">
+        <h3 className="profile__YouHaveNotAdded">You have not added a picture. If you do, they'll all live here.</h3>
+        <img
+          className="profile__travolta"
+          src={require("./media/travolta.gif")}
+        />
+      </div>
+    );
  
   return (
     // <div className="profile__wrapper">{posts && ProfilePosts}</div>
     <div>
-
-        <Masonry
-          className={"grid"}
-          elementType={"div"}
-          options={masonryOptions}
-          disableImagesLoaded={false}
-          updateOnEachImageLoad={false}
-        >
-          {posts && ProfilePosts}
-        </Masonry>
-
+      <Masonry
+        className={"grid"}
+        elementType={"div"}
+        options={masonryOptions}
+        disableImagesLoaded={false}
+        updateOnEachImageLoad={false}
+      >
+  
+        {posts ? RenderPostDoesNotExit : ProfilePosts}
+      </Masonry>
     </div>
   );
 }

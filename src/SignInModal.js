@@ -4,6 +4,10 @@ import Modal from "@material-ui/core/Modal";
 import Logo from "./media/photolynx-logo.png";
 import { Button, Input } from "@material-ui/core";
 import { auth } from "./firebase";
+import { useHistory } from "react-router-dom";
+
+
+
 
 function getModalStyle() {
   const top = 50;
@@ -28,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignInModal = ({ openSignIn, setOpenSignIn }) => {
+  const history = useHistory();
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [userName, setUserName] = useState("");
@@ -39,7 +44,7 @@ const SignInModal = ({ openSignIn, setOpenSignIn }) => {
 
      auth.signInWithEmailAndPassword(email, password)
      .catch((error) => (alert(error.message)))
-
+      history.push(`/Home`);
      setOpenSignIn(false);
    };
 

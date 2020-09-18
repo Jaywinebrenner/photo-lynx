@@ -8,16 +8,20 @@ import Profile from './Profile'
 import Home from './Home';
 import "bootstrap/dist/css/bootstrap.css";
 
+const renderGlobalAppBackground = () => {
+document.body.style = "background: #fafafa;"
+}
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
- 
-        <Route path="/" component={App} />
-        <Route path="/Home" component={Home} />
-        <Route path="/profile" component={Profile} />
-
-      </Router>
+      {renderGlobalAppBackground()}
+      {/* {(document.body.style = "background: #fafafa;")} */}
+      <Route path="/" component={App} />
+      <Route path="/Home" component={Home} />
+      <Route path="/profile" component={Profile} />
+    </Router>
   </React.StrictMode>,
   document.getElementById("root"),
 );

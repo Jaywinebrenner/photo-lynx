@@ -16,3 +16,23 @@
   margin: 0 auto;
 }
 
+.profile__postDoesNotExistWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 50px;
+  background-color: #fafafa;
+  align-items: center;
+  text-align: center;
+
+}
+
+.profile__travolta {
+  justify-content: center;
+  width: 300px;
+  border: 1px solid black;
+}
+
+.profile__YouHaveNotAdded {
+
+}
