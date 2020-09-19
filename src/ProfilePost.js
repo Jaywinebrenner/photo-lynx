@@ -153,61 +153,6 @@ const renderProfilePost = () => {
 
   return renderProfilePost()
 
-  // <div className="profilePost">
-  //   <div className="profilePost__header">
-  //     <Avatar className="profilePost__avatar" />
-  //     {/* <Avatar className="profilePost__avatar" src={imageUrl} /> */}
-  //     {/* <Avatar className="profilePost__avatar" src={renderPost} /> */}
-
-  //     <h3>{userName}</h3>
-  //   </div>
-  //   <img className="profilePost__image" src={imageUrl} />
-  //   <div className="app__subheader">
-  //     <FontAwesomeIcon
-  //       onClick={() => setOpenComment(true)}
-  //       className="app__icon"
-  //       size="2x"
-  //       icon={faComment}
-  //     />
-
-  //     <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
-  //   </div>
-
-  //   <h4 className="profilePost__text">
-  //     <strong>{userName}:</strong> {caption}
-  //   </h4>
-  //   <div className="profilePost__comments">
-
-  //     {comments.map((comment) => (
-  //       <p>
-  //         <strong>{comment.userName}</strong> {comment.text}
-  //       </p>
-  //     ))}
-  //   </div>
-
-  //   <Modal open={openComment} onClose={() => setOpenComment(false)}>
-  //     <div style={modalStyle} className={classes.paper}>
-  //       <img className="app__headerImage" src={Logo} />
-  //       <form className="profilePost__commentBox">
-  //         <input
-  //           className="profilePost__input"
-  //           type="text"
-  //           placeholder="Add a comment..."
-  //           value={comment}
-  //           onChange={(e) => setComment(e.target.value)}
-  //         />
-  //         <button
-  //           className="profilePost__button"
-  //           disabled={!comment}
-  //           type="submit"
-  //           onClick={postComment}
-  //         >
-  //           Post
-  //         </button>
-  //       </form>
-  //     </div>
-  //   </Modal>
-  // </div>
 };
 
 export default ProfilePost;

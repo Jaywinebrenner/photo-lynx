@@ -84,7 +84,7 @@ function App() {
 
   const signOutClick = () => {
     auth.signOut();
-    history.push(`/Home`);
+    // history.push(`/Home`);
 
   }
 

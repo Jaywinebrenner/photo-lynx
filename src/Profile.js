@@ -77,6 +77,23 @@ const ProfilePosts =
         />
       </div>
     );
+
+    console.log("posts on profile", posts);
+
+      const renderProfilePosts = () => {
+        if (ProfilePosts[0] === undefined) {
+          return RenderPostDoesNotExit;
+        } else if (user === null) {
+          return RenderPostDoesNotExit;
+        } else {
+          return ProfilePosts;
+        }
+      }
+
+      console.log("posts on Profile", posts);
+      console.log("profile posts", ProfilePosts[0])
+
+
  
   return (
     // <div className="profile__wrapper">{posts && ProfilePosts}</div>
@@ -88,8 +105,8 @@ const ProfilePosts =
         disableImagesLoaded={false}
         updateOnEachImageLoad={false}
       >
-  
-        {posts ? RenderPostDoesNotExit : ProfilePosts}
+        {renderProfilePosts()}
+        {/* {posts.length === 0  ? RenderPostDoesNotExit : ProfilePosts} */}
       </Masonry>
     </div>
   );
