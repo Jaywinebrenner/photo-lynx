@@ -13,6 +13,8 @@ import Modal from "@material-ui/core/Modal";
 import Logo from "./media/photolynx-logo.png";
 
 function getModalStyle() {
+
+
   const top = 50;
   const left = 50;
 
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 //userName = Person who wrote the post. 
 // user = Person who is signed in
 
-const Post = ({ postId, imageUrl, userName, caption, user, thumbnail }) => {
+const Post = ({ postId, imageUrl, userName, caption, user, thumbnail, localLikes, setLocalLikes }) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const classes = useStyles();
@@ -78,7 +80,7 @@ const Post = ({ postId, imageUrl, userName, caption, user, thumbnail }) => {
     setOpenComment(false);
   };
 
-  const [localLikes, setLocalLikes] = useState(3)
+
 
 
   const addLike = () => {

@@ -18,6 +18,10 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { useHistory } from "react-router-dom";
 import { Redirect } from "react-router";
+import Home from "./Home"
+import Heart from "./Heart";
+import Profile from "./Profile";
+
 
 
 
@@ -36,12 +40,16 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
 
-   const history = useHistory();
+
+
+  const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false)
   const [openImageUpload, setOpenImageUpload] = useState(false)
   const [openProfileImageUpload, setOpenProfileImageUpload] = useState(false)
+  const [localLikes, setLocalLikes] = useState(3);
+  
 
   const [userName, setUserName] = useState('');
   const [posts, setPosts] = useState([]);
@@ -98,6 +106,46 @@ function App() {
 
  console.log("user", user);
 
+
+const [whatScreen, setWhatScreen] = ("Home")
+const [isHomeVisible, setIsHomeVisible] = useState(true)
+const [isProfileVisible, setIsProfileVisible] = useState(false)
+const [isHeartVisible, setIsHeartVisible] = useState(false)
+
+const navigateToHeart = () => {
+  setIsHeartVisible(true)
+  setIsHomeVisible(false)
+  setIsProfileVisible(false)
+}
+const navigateToHome = () => {
+  setIsHeartVisible(false);
+  setIsHomeVisible(true);
+  setIsProfileVisible(false);
+};
+
+const navigateToProfile = () => {
+  setIsHeartVisible(false);
+  setIsHomeVisible(false);
+  setIsProfileVisible(true);
+};
+
+const renderWhatScreen = () => {
+  if (isHomeVisible) {
+    return <Home 
+    localLikes={localLikes}
+    setLocalLikes={setLocalLikes}/>;
+  }
+  if (isHeartVisible) {
+    return <Heart
+    localLikes={localLikes}
+    setLocalLikes={setLocalLikes}/>
+  }
+  if (isProfileVisible) {
+    return <Profile/>
+  }
+}
+
+
   return (
     <div className="app">
       {user?.displayName ? (
@@ -109,10 +157,8 @@ function App() {
       ) : (
         <div>{/* {alert("Please Login to upload Photos")} */}</div>
       )}
-
       <SignUpModal open={open} setOpen={setOpen} />
       <SignInModal openSignIn={openSignIn} setOpenSignIn={setOpenSignIn} />
-
       {/* HEADER */}
       <div className="app__header">
         <img className="app__headerImage" src={Logo} />
@@ -156,9 +202,6 @@ function App() {
             </FormControl>
           </React.Fragment>
         ) : (
-          // <Button type="submit" onClick={() => auth.signOut()}>
-          //   Log Out
-          // </Button>
 
           <div className="app__loginContainer">
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
@@ -167,9 +210,12 @@ function App() {
         )}
       </div>
       <div className="app__subheader">
-        <Link to="/Home">
+
+
+        <div onClick={() => navigateToHome()}>
           <FontAwesomeIcon className="app__icon" size="2x" icon={faHome} />
-        </Link>
+        </div>
+
         <FontAwesomeIcon
           className="app__icon"
           onClick={() => cameraUploadIconClick()}
@@ -177,13 +223,18 @@ function App() {
           icon={faCamera}
         />
 
-        <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
-        <Link to="/Profile">
-          <FontAwesomeIcon className="app__icon" size="2x" icon={faUser} />
-        </Link>
-      </div>
 
+        <div onClick={() => navigateToHeart()}>
+          <FontAwesomeIcon className="app__icon" size="2x" icon={faHeart} />
+        </div>
+
+
+        <div onClick={()=> navigateToProfile()}>
+          <FontAwesomeIcon className="app__icon" size="2x" icon={faUser} />
+        </div>
+      </div>
       <div className="app__posts">{/* <Home posts={posts} /> */}</div>
+      {renderWhatScreen()}
     </div>
   );
 }

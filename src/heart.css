@@ -1,0 +1,24 @@
+.heart__text {
+  justify-content: center;
+  width: 300px;
+  border: 1px solid black;
+}
+
+.heart {
+  display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 50px;
+    background-color: #fafafa;
+    align-items: center;
+    text-align: center;
+
+}  
+.heart__icon {
+  color: maroon;
+  margin-right: 30px;
+}
+
+.heart__icon:hover {
+  color: rgb(186, 24, 24);
+}

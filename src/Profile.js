@@ -81,6 +81,7 @@ const ProfilePosts =
     console.log("posts on profile", posts);
 
       const renderProfilePosts = () => {
+        
         if (ProfilePosts[0] === undefined) {
           return RenderPostDoesNotExit;
         } else if (user === null) {

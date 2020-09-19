@@ -7,6 +7,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Profile from './Profile'
 import Home from './Home';
 import "bootstrap/dist/css/bootstrap.css";
+import Heart from './Heart'
 
 const renderGlobalAppBackground = () => {
 document.body.style = "background: #fafafa;"
@@ -19,8 +20,9 @@ ReactDOM.render(
       {renderGlobalAppBackground()}
       {/* {(document.body.style = "background: #fafafa;")} */}
       <Route path="/" component={App} />
-      <Route path="/Home" component={Home} />
+      {/* <Route path="/Home" component={Home} />
       <Route path="/profile" component={Profile} />
+      <Route path="/heart" component={Heart} /> */}
     </Router>
   </React.StrictMode>,
   document.getElementById("root"),

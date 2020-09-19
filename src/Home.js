@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Post from './Post';
 import "./Home.css";
 
-const Home = () => {
+const Home = ({ setLocalLikes , localLikes}) => {
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const [posts, setPosts] = useState([]);
@@ -44,7 +44,6 @@ const Home = () => {
       });
   }, []);
 
-
   // // Get Profile Photos
   // useEffect(() => {
   //   db.collection("profiles").onSnapshot((snapshot) => {
@@ -52,36 +51,32 @@ const Home = () => {
   //   });
   // }, []);
 
+  let correctThumb = null;
+  if (allThumbnails) {
+    correctThumb = allThumbnails.find((x) => x.userName === user?.displayName);
+  }
+  // console.log("correct thumbnail", correctThumb);
 
-let correctThumb = null;
-if (allThumbnails) {
-  correctThumb = allThumbnails.find((x) => x.userName === user?.displayName);
-}
-// console.log("correct thumbnail", correctThumb);
+  console.log("user", user);
+  posts && console.log("posts", posts[0]);
 
-console.log("user", user)
-posts && console.log("posts", posts[0]);
-
-const renderPost = posts.map(({ id, post }) => (
-  <Post
-    postId={id}
-    key={id}
-    user={user}
-    userName={post.userName}
-    imageUrl={post.imageUrl}
-    caption={post.caption}
-    thumbnail={correctThumb}
-  />
-));
-
+  const renderPost = posts.map(({ id, post }) => (
+    <Post
+      postId={id}
+      key={id}
+      user={user}
+      userName={post.userName}
+      imageUrl={post.imageUrl}
+      caption={post.caption}
+      thumbnail={correctThumb}
+      setLocalLikes={setLocalLikes}
+      localLikes={localLikes}
+    />
+  ));
 
   // console.log("home posts", allThumbnails);
 
-  return (
-    <div className="home__wrapper">
-      {renderPost}
-    </div>
-  );
-}
+  return <div className="home__wrapper">{renderPost}</div>;
+};
 
 export default Home
