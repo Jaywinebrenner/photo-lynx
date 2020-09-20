@@ -48,11 +48,30 @@ const Heart = () => {
     console.log("posts on HEART", posts);
 
 
+
+      // const renderPost = posts.map(({ id, post }) => (
+      //   <Post
+      //     postId={id}
+      //     key={id}
+      //     user={user}
+      //     userName={post.userName}
+      //     imageUrl={post.imageUrl}
+      //     caption={post.caption}
+      //     thumbnail={correctThumb}
+      //     setLocalLikes={setLocalLikes}
+      //     localLikes={localLikes}
+      //   />
+      // ));
+
+     
+
+
   return (
     <div className="heart">
       <h5 className="heart__text">
         You have accumulated this many hearts. This many people love you.
       </h5>
+
       <FontAwesomeIcon
         className="heart__icon"
         size="6x"

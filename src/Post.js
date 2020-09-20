@@ -84,10 +84,19 @@ const Post = ({ postId, imageUrl, userName, caption, user, thumbnail, localLikes
 
 
   const addLike = () => {
-    // if (localLikes === )
+
     setLocalLikes(localLikes + 1)
+        // db.collection("posts").doc(postId).collection("likes").add({
+        //   likes: localLikes,
+        //   userName: user.displayName,
+        //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        // });
   }
+
+  console.log("user on POST", user)
+    console.log("userName on POST", userName);
  
+
   
 
 const renderPost = 

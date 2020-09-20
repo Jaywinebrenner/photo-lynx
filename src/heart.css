@@ -1,7 +1,7 @@
 .heart__text {
   justify-content: center;
   width: 300px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .heart {
@@ -16,7 +16,8 @@
 }  
 .heart__icon {
   color: maroon;
-  margin-right: 30px;
+  /* margin-right: 30px; */
+
 }
 
 .heart__icon:hover {

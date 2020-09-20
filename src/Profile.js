@@ -70,7 +70,7 @@ const ProfilePosts =
 
     const RenderPostDoesNotExit = (
       <div className="profile__postDoesNotExistWrapper">
-        <h3 className="profile__YouHaveNotAdded">You have not added a picture. If you do, they'll all live here.</h3>
+        <h3 className="profile__YouHaveNotAdded">You have not posted a picture. If you do, they'll all live here.</h3>
         <img
           className="profile__travolta"
           src={require("./media/travolta.gif")}

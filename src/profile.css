@@ -20,19 +20,20 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 50px;
+  /* padding: 50px; */
   background-color: #fafafa;
-  align-items: center;
-  text-align: center;
+ align-items: center; 
+  text-align: center; 
 
 }
 
 .profile__travolta {
-  justify-content: center;
+  flex: 1;
+  /* justify-content: center; */
   width: 300px;
   border: 1px solid black;
 }
 
 .profile__YouHaveNotAdded {
-
+  flex: 1;
 }
