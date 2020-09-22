@@ -2,6 +2,9 @@
 
 # photolynx - 
 
+Deployed on Firebase Here: 
+https://instagram-clone-e26b4.web.app/
+
 
 <img src="./x-gifs/1.gif" width="750">
 
