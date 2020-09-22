@@ -49,6 +49,7 @@ function App() {
   const [openImageUpload, setOpenImageUpload] = useState(false)
   const [openProfileImageUpload, setOpenProfileImageUpload] = useState(false)
   const [localLikes, setLocalLikes] = useState(3);
+  const [disliked, setDisliked] = useState(false)
   
 
   const [userName, setUserName] = useState('');
@@ -131,14 +132,20 @@ const navigateToProfile = () => {
 
 const renderWhatScreen = () => {
   if (isHomeVisible) {
-    return <Home 
-    localLikes={localLikes}
-    setLocalLikes={setLocalLikes}/>;
+    return (
+      <Home
+        localLikes={localLikes}
+        setLocalLikes={setLocalLikes}
+        disliked={disliked}
+        setDislked={setDisliked}
+      />
+    );
   }
   if (isHeartVisible) {
     return <Heart
     localLikes={localLikes}
-    setLocalLikes={setLocalLikes}/>
+    setLocalLikes={setLocalLikes}
+    />
   }
   if (isProfileVisible) {
     return <Profile/>

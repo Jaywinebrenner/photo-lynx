@@ -3,7 +3,7 @@
 # photolynx - 
 
 
-<img src="./x-gifs/photolynx.gif" width="750">
+<img src="./x-gifs/1.gif" width="750">
 
 ## By **Jay Winebrenner**
 

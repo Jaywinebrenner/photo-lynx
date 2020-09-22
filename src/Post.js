@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 //userName = Person who wrote the post. 
 // user = Person who is signed in
 
-const Post = ({ postId, imageUrl, userName, caption, user, thumbnail, localLikes, setLocalLikes }) => {
+const Post = ({ postId, imageUrl, userName, caption, user, thumbnail, localLikes, setLocalLikes, disliked, setDisliked }) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const classes = useStyles();
@@ -85,7 +85,12 @@ const Post = ({ postId, imageUrl, userName, caption, user, thumbnail, localLikes
 
   const addLike = () => {
 
-    setLocalLikes(localLikes + 1)
+    if(!disliked) {
+      setLocalLikes(localLikes + 1)
+    } else {
+      setLocalLikes(localLikes - 1 )
+    }
+
         // db.collection("posts").doc(postId).collection("likes").add({
         //   likes: localLikes,
         //   userName: user.displayName,

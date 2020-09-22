@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Post from './Post';
 import "./Home.css";
 
-const Home = ({ setLocalLikes , localLikes}) => {
+const Home = ({ setLocalLikes , localLikes, disliked, setDisliked}) => {
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const [posts, setPosts] = useState([]);
@@ -71,6 +71,8 @@ const Home = ({ setLocalLikes , localLikes}) => {
       thumbnail={correctThumb}
       setLocalLikes={setLocalLikes}
       localLikes={localLikes}
+      disliked={disliked}
+      setDisliked={setDisliked}
     />
   ));
 
